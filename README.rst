@@ -1,0 +1,138 @@
+=====
+Django social auth
+=====
+
+This app is wrapper around 'social_django' app to create reusable user module with some common APIs required in any
+typical django rest framework project. To use this app, you also need to install `social_django` app.
+
+This app comes with this feature:
+
+1.  API endpoints to register / login user via email and password
+
+2.  API endpoint to take access_token and oauth_user_id as input from frontend and validate that access token to register
+    that user in your system.
+
+3.  API endpoint to request password reset link. (you need to configure required settings in your project settings file
+    in order to send email with your designed template)
+
+4.  API endpoint to update password.
+
+5.  Email verification link is sent on each new registration.
+
+Quick start
+-----------
+
+1. download latest version of this app from dist folder and then run command to install in your virtualenv :
+    pip install /path/to/downloaded/file
+
+2. Add below app to your INSTALLED_APPS setting like this::
+
+    INSTALLED_APPS = [
+        ...
+        'rest_framework.authtoken',
+        'social_django',
+        'drf_auth_users',
+    ]
+
+3. Include the polls URLconf in your project urls.py like this::
+
+    path('auth/', include('drf_auth_users.urls')),
+
+4. Run `python manage.py migrate` to create the polls models.
+
+
+*****
+Settings
+*****
+
+
+*   To provide social authentication feature, This project is wrapped around `social_django` library. So you need to
+    set settings required for `social_django`. Minimum required settings are as below. For more details documentation
+    refer this link.
+
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'rest_framework.authentication.TokenAuthentication',
+        )
+    }
+
+    AUTH_USER_MODEL = 'drf_auth_users.User'
+
+    AUTHENTICATION_BACKENDS = (
+        'social_core.backends.open_id.OpenIdAuth',
+        'social_core.backends.google.GoogleOpenId',
+        'social_core.backends.google.GoogleOAuth2',
+        'social_core.backends.twitter.TwitterOAuth',
+        'social_core.backends.facebook.FacebookOAuth2',
+        'social_core.backends.yahoo.YahooOpenId',
+        'django.contrib.auth.backends.ModelBackend',
+    )
+
+    SOCIAL_AUTH_PIPELINE = (
+        'social_core.pipeline.social_auth.social_details',
+        'social_core.pipeline.social_auth.social_uid',
+        'social_core.pipeline.social_auth.auth_allowed',
+        'social_core.pipeline.social_auth.social_user',
+        'social_core.pipeline.social_auth.associate_by_email',
+        'social_core.pipeline.user.create_user',
+        'social_core.pipeline.social_auth.associate_user',
+        'social_core.pipeline.social_auth.load_extra_data',
+        'social_core.pipeline.user.user_details'
+    )
+
+
+*  'Sign in with Facebook' example for Django rest framework,
+
+    *   Frontend should redirect user to facebook site and after completing OAuth2 flow, it should receive ** access_token **
+    *   After adding `path('auth/', include('drf_auth_users.urls')),` in your urls.py, you can send post request to your
+        endpoint `/auth/users/oauth` with access_token and email address. (read detailed docs in views file)
+    *   This endpoint will create new user or will associate with already existing user with same email address.
+    *   As per `social_django` settings requirement, you need to add below settings:
+
+            SOCIAL_AUTH_FACEBOOK_KEY = 'AAAAAAAA'
+            SOCIAL_AUTH_FACEBOOK_SECRET = 'BBBBBBBBBBBBBBBBBBBBBBBBBBBB'
+
+            SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+              'fields': 'id, name, email'
+            }
+
+
+*   Send verification mail on signup
+
+
+    *   By setting `SEND_VERIFICATION_MAIN_ON_SIGNUP' as True, registration api will send verification mail to registered
+        email address.
+
+    *   Settings:
+
+            SEND_VERIFICATION_MAIN_ON_SIGNUP = True
+            # This template should be under root dir / templates dir
+            VERIFICATION_EMAIL_TEMPLATE = 'email_verification.html'
+            FRONTEND_URL_FOR_EMAIL_VERIFICATION_HANDLE = 'http://localhost:4500/verfiy_email?code='
+
+
+*   Send password reset link in email
+
+
+    *   If user has registered via OAuth flow (by calling /auth/users/oauth/ flow), then password can be set by following
+        steps:
+
+            *   calling API endpoint : `/auth/users/password_reset_request/`
+            *   Email with password reset link will be send to registered email address. You can set frontend url where
+                you want to redirect user to verify link and set new password.
+            *   After landing on frontend page to reset password, Frontend app can verify password reset link by
+                calling : `/auth/users/<user_id>/password_reset_status/<code>/
+            *   If ok then allow user to enter new password and set that password to this post request :
+                `/auth/users/<user_id>/update_password/`
+            *   Settings:
+
+                    PASSWORD_RESET_EMAIL_TEMPLATE = 'password_reset_email.html'
+                    FRONTEND_URL_FOR_PASSWORD_RESET_HANDLE = 'http://localhost:4500/password_reset?code='
+
+
+    *   If user has registered via email password flow and want to change password. then also above steps can be followed.
+
+
+
+
+

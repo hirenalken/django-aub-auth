@@ -1,0 +1,52 @@
+Metadata-Version: 1.1
+Name: drf-auth-users
+Version: 0.2
+Summary: This app is wrapper around 'social_django' app to create reusable user module
+Home-page: https://www.example.com/
+Author: Hiren Patel
+Author-email: hiren@auberginesolutions.com
+License: BSD License
+Description: =====
+        Django social auth
+        =====
+        
+        This app is wrapper around 'social_django' app to create reusable user module with some common APIs required in any
+        typical django rest framework project. To use this app, you also need to install `social_django` app.
+        
+        This app comes with this feature:
+        
+        1.  API endpoints to register / login user via email and password
+        
+        2.  API endpoint to take access_token and oauth_user_id as input from frontend and validate that access token to register
+            that user in your system.
+        
+        3.  API endpoint to request password reset link. (you need to configure required settings in your project settings file
+            in order to send email with your designed template)
+        
+        4.  API endpoint to update password.
+        
+        5.  Email verification link is sent on each new registration.
+        
+        Quick start
+        -----------
+        
+        1. Add below app to your INSTALLED_APPS setting like this::
+        
+            INSTALLED_APPS = [
+                ...
+                'rest_framework.authtoken',
+                'social_django',
+                'drf_auth_users',
+            ]
+        
+        2. Include the polls URLconf in your project urls.py like this::
+        
+            path('auth/', include('drf_auth_users.urls')),
+        
+        3. Run `python manage.py migrate` to create the polls models.
+        
+Platform: UNKNOWN
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Framework :: Django :: 2.0
+Classifier: Intended Audience :: Developers
