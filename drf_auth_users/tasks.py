@@ -37,7 +37,7 @@ def send_reset_password_mail(user_id, key):
     content_passed_to_template = {
         'first_name': user.first_name,
         'last_name': user.last_name,
-        'reset_password_url': settings.FRONTEND_URL_FOR_PASSWORD_RESET_HANDLE + key + '&user_id=' + user_id
+        'reset_password_url': settings.FRONTEND_URL_FOR_PASSWORD_RESET_HANDLE + key + '&user_id=' + str(user_id)
     }
     html_content = html_template.render(content_passed_to_template)
 
