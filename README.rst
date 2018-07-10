@@ -54,7 +54,7 @@ Settings
 
 *   To provide social authentication feature, This project is wrapped around `social_django` library. So you need to
     set settings required for `social_django`. Minimum required settings are as below. For more details documentation
-    refer this link.::
+    refer this link::
 
     REST_FRAMEWORK = {
         'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -111,10 +111,10 @@ Settings
 
     *   Settings::
 
-            SEND_VERIFICATION_MAIN_ON_SIGNUP = True
-            # This template should be under root dir / templates dir
-            VERIFICATION_EMAIL_TEMPLATE = 'email_verification.html'
-            FRONTEND_URL_FOR_EMAIL_VERIFICATION_HANDLE = 'http://localhost:4500/verfiy_email?code='
+        SEND_VERIFICATION_MAIN_ON_SIGNUP = True
+        # This template should be under root dir / templates dir
+        VERIFICATION_EMAIL_TEMPLATE = 'email_verification.html'
+        FRONTEND_URL_FOR_EMAIL_VERIFICATION_HANDLE = 'http://localhost:4500/verfiy_email?code='
 
 
 *   Send password reset link in email
@@ -123,17 +123,17 @@ Settings
     *   If user has registered via OAuth flow (by calling /auth/users/oauth/ flow), then password can be set by following
         steps:
 
-            *   calling API endpoint : `/auth/users/password_reset_request/`
-            *   Email with password reset link will be send to registered email address. You can set frontend url where
-                you want to redirect user to verify link and set new password.
-            *   After landing on frontend page to reset password, Frontend app can verify password reset link by
-                calling : `/auth/users/<user_id>/password_reset_status/<code>/
-            *   If ok then allow user to enter new password and set that password to this post request :
-                `/auth/users/<user_id>/update_password/`
-            *   Settings:
+        *   calling API endpoint : `/auth/users/password_reset_request/`
+        *   Email with password reset link will be send to registered email address. You can set frontend url where
+            you want to redirect user to verify link and set new password.
+        *   After landing on frontend page to reset password, Frontend app can verify password reset link by
+            calling : `/auth/users/<user_id>/password_reset_status/<code>/
+        *   If ok then allow user to enter new password and set that password to this post request :
+            `/auth/users/<user_id>/update_password/`
+        *   Settings::
 
-                    PASSWORD_RESET_EMAIL_TEMPLATE = 'password_reset_email.html'
-                    FRONTEND_URL_FOR_PASSWORD_RESET_HANDLE = 'http://localhost:4500/password_reset?code='
+            PASSWORD_RESET_EMAIL_TEMPLATE = 'password_reset_email.html'
+            FRONTEND_URL_FOR_PASSWORD_RESET_HANDLE = 'http://localhost:4500/password_reset?code='
 
 
     *   If user has registered via email password flow and want to change password. then also above steps can be followed.
