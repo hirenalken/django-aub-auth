@@ -19,10 +19,11 @@ This app comes with this feature:
 
 5.  Email verification link is sent on each new registration.
 
-Quick start
------------
+Quick start Instructions
+------------------------
 
-1. download latest version of this app from dist folder and then run command to install in your virtualenv :
+1. download latest version of this app from dist folder and then run command to install in your virtualenv ::
+
     pip install /path/to/downloaded/file
 
 2. Add below app to your INSTALLED_APPS setting like this::
@@ -40,6 +41,11 @@ Quick start
 
 4. Run `python manage.py migrate` to create the polls models.
 
+5. For any email sending functionality, this app uses another app. Download from this link.
+   `https://gitlab.com/hirenpatel/emails-module`
+
+6. You also need to configure celery in your project. Please follow steps: `http://docs.celeryproject.org/en/latest/django/first-steps-with-django.html`
+
 
 *****
 Settings
@@ -48,7 +54,7 @@ Settings
 
 *   To provide social authentication feature, This project is wrapped around `social_django` library. So you need to
     set settings required for `social_django`. Minimum required settings are as below. For more details documentation
-    refer this link.
+    refer this link.::
 
     REST_FRAMEWORK = {
         'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -87,7 +93,7 @@ Settings
     *   After adding `path('auth/', include('drf_auth_users.urls')),` in your urls.py, you can send post request to your
         endpoint `/auth/users/oauth` with access_token and email address. (read detailed docs in views file)
     *   This endpoint will create new user or will associate with already existing user with same email address.
-    *   As per `social_django` settings requirement, you need to add below settings:
+    *   As per `social_django` settings requirement, you need to add below settings::
 
             SOCIAL_AUTH_FACEBOOK_KEY = 'AAAAAAAA'
             SOCIAL_AUTH_FACEBOOK_SECRET = 'BBBBBBBBBBBBBBBBBBBBBBBBBBBB'
@@ -103,7 +109,7 @@ Settings
     *   By setting `SEND_VERIFICATION_MAIN_ON_SIGNUP' as True, registration api will send verification mail to registered
         email address.
 
-    *   Settings:
+    *   Settings::
 
             SEND_VERIFICATION_MAIN_ON_SIGNUP = True
             # This template should be under root dir / templates dir
