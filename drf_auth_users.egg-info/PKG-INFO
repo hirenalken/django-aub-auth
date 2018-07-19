@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: drf-auth-users
-Version: 0.3.1
+Version: 0.3
 Summary: This app is wrapper around 'social_django' app to create reusable user module
 Home-page: https://www.example.com/
 Author: Hiren Patel
