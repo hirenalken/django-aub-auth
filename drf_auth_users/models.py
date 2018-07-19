@@ -61,6 +61,9 @@ class User(AbstractBaseUser):
     """
         Maintain user and its attributes
     """
+    class Meta:
+        db_table = 'users'
+
     # first name of the user
     first_name = models.CharField(max_length=200, null=True)
     # last name of the user
@@ -105,6 +108,8 @@ class User(AbstractBaseUser):
 
 
 class UserVerification(models.Model):
+    class Meta:
+        db_table = 'user_verification_code'
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     verification_key = models.CharField(max_length=100, blank=True)
@@ -112,6 +117,8 @@ class UserVerification(models.Model):
 
 
 class UserResetPassword(models.Model):
+    class Meta:
+        db_table = 'user_reset_password'
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     key = models.CharField(max_length=100, blank=True)
@@ -154,7 +161,7 @@ class OAuthUsers(models.Model):
         on_delete=models.CASCADE)
 
     class Meta:
-        # db_table = 'oauth_users'
+        db_table = 'oauth_users'
         unique_together = ('oauth_user_id', 'oauth_provider')
 
 
@@ -162,6 +169,8 @@ class OAuthProviders(models.Model):
     """
         Oauth provider detail
     """
+    class Meta:
+        db_table = 'oauth_providers'
 
     # name of the oauth_providers role
     name = models.CharField(max_length=20)
