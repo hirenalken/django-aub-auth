@@ -1,0 +1,16 @@
+name: Django CI
+
+on:
+  release:
+    types: [prereleased]
+    
+    
+jobs:
+  build:
+
+    runs-on: ubuntu-latest    
+
+    steps:    
+    - name: Run Tests
+      run: |
+        echo "cool"
