@@ -1,0 +1,16 @@
+name: Django CI
+
+on:
+  release:
+    types: [published]
+    
+    
+jobs:
+  build:
+
+    runs-on: ubuntu-latest    
+
+    steps:    
+    - name: Release
+      run: |
+        echo "cool published"
